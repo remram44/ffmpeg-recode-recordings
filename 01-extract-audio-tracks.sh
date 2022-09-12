@@ -15,5 +15,5 @@ logrun(){
 AUDIO_STREAMS="$(logrun ffprobe -v quiet -of json -show_streams "$1" | jq '.streams[] | select(.codec_type=="audio") | .index')"
 BASE_NAME="$(echo "$1" | sed 's/\.[a-z0-9]\{3\}$//')"
 for STREAM in $AUDIO_STREAMS; do
-    logrun ionice nice ffmpeg -v quiet -i "$1" -map 0:$STREAM -c:a copy "$BASE_NAME.$STREAM.aac"
+    logrun ionice -c 3 nice ffmpeg -v quiet -i "$1" -map 0:$STREAM -c:a copy "$BASE_NAME.$STREAM.aac"
 done

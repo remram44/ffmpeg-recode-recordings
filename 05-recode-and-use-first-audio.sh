@@ -12,4 +12,4 @@ logrun(){
     "$@"
 }
 
-logrun ionice nice ffmpeg -i "$1" -map 0:v:0 -map 0:a:0 -c:v h264 -c:a copy -crf 28 -tune stillimage "$(echo "$1" | sed 's/\.[a-z0-9]\{3\}$//').mp4"
+logrun ionice -c 3 nice ffmpeg -i "$1" -map 0:v:0 -map 0:a:0 -c:v h264 -c:a copy -crf 28 -tune stillimage "$(echo "$1" | sed 's/\.[a-z0-9]\{3\}$//').mp4"
